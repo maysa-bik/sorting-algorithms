@@ -1,4 +1,4 @@
-# Tri par insertion
+# Tri par sélection
 def tri_insertion(liste):
     for i in range (1, len(liste)):
         cle = liste[i]
