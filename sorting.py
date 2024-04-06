@@ -1,3 +1,4 @@
+
 # Tri par insertion
 def tri_insertion(liste):
     for i in range (1, len(liste)):
@@ -11,4 +12,5 @@ def tri_insertion(liste):
         liste[j + 1] = cle
 
     return liste
+
 
