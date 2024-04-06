@@ -1,3 +1,6 @@
+"""
+tri par selection
+"""
 def tri_selection(arr):
     # Traverse through all array elements
     for i in range(len(arr)):
@@ -9,8 +12,10 @@ def tri_selection(arr):
 
         # Swap the found minimum element with the first element
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
-
-def tri_bubble(arr):
+"""
+tri par bubble
+"""
+def tri_bulles(arr):
     # Traverse through all array elements
     for i in range(len(arr)):
         # Last i elements are already sorted
@@ -31,17 +36,34 @@ def tri_bubble(arr):
 [3,5,6,8, 9]
 [",5,6,8,9]
 """
-def tri_insertion(liste):
-    for i in range (1, len(liste)):
-        cle = liste[i]
+def tri_insertion(L):
+    for i in range (1, len(L)):
+        cle = L[i]
         j = i - 1
 
-        while j >= 0 and cle < liste[j]:
-            liste[j + 1] = liste[j]
+        while j >= 0 and cle < L[j]:
+            L[j + 1] = L[j]
             j -= 1
 
-        liste[j + 1] = cle
+        L[j + 1] = cle
 
-    return liste
+    return L
 
+"""
+tri paar fusion
+"""
+
+
+"""
+tri par rapide
+"""
+
+
+"""
+tri par tas
+"""
+
+"""
+tri à peigne
+"""
 

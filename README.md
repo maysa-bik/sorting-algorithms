@@ -26,3 +26,44 @@ Dans l'effervescence de la ville égyptienne au Ier siècle apr. J.-C., se dress
 ## Conclusion
 
 Ce projet démontre l'application pratique des différents algorithmes de tri et fournit un outil utile pour automatiser le processus de tri des données. Des améliorations futures pourraient inclure une interface utilisateur graphique et l'optimisation des performances des algorithmes de tri.
+
+## tri par bulles
+Étape 1
+1.1. ( 5 1 4 2 8 ) → ( 1 5 4 2 8 ). 
+1.2. ( 1 5 4 2 8 ) → ( 1 4 5 2 8 )
+1.3. ( 1 4 5 2 8 ) → ( 1 4 2 5 8 )
+1.4. ( 1 4 2 5 8 ) → ( 1 4 2 5 8 )
+Étape 2
+2.1. ( 1 4 2 5 8 ) → ( 1 4 2 5 8 )
+2.2. ( 1 4 2 5 8 ) → ( 1 2 4 5 8 )
+2.3. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
+Étape 3
+3.1. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
+3.2. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
+Étape 4
+4.1. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
+
+## tri par insertion 
+
+i = 1 : 	
+6	5	3	1	8	7	2	4 ⟶  5	6	3	1	8	7	2	4
+ 	
+i = 2 : 	
+5	6	3	1	8	7	2	4  ⟶ 3	5	6	1	8	7	2	4
+ 	
+i = 3 : 	
+3	5	6	1	8	7	2	4  ⟶  1	3	5	6	8	7	2	4
+	
+i = 4 : 	
+1	3	5	6	8	7	2	4  ⟶ 1	3	5	6	8	7	2	4
+ 	
+i = 5 : 	
+1	3	5	6	8	7	2	4 ⟶  1	3	5	6	7	8	2	4
+	
+i = 6 : 	
+1	3	5	6	7	8	2	4  ⟶  1	 2	3	5	6	7	8	4	 
+
+i = 7 : 	
+1	2	3	5	6	7	8	4   ⟶  1	2	3	4	5	6	7	8
+ 	
+
