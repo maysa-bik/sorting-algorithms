@@ -11,8 +11,15 @@ def selection_sort(arr):
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
 def bubble_sort(arr):
-    # Implement bubble sort
-    pass
+    # Traverse through all array elements
+    for i in range(len(arr)):
+        # Last i elements are already sorted
+        for j in range(0, len(arr) - i - 1):
+            # Traverse the array from 0 to n-i-1
+            # Swap if the element found is greater
+            # than the next element
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
 
 def insertion_sort(arr):
