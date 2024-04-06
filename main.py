@@ -1,4 +1,4 @@
-from sorting_algorithms import selection_sort, bubble_sort, insertion_sort, merge_sort, quick_sort, heap_sort, comb_sort
+from sorting import selection_sort, bubble_sort, insertion_sort, merge_sort, quick_sort, heap_sort, comb_sort
 
 
 def main():
