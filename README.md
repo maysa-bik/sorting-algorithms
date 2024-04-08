@@ -27,7 +27,7 @@ Dans l'effervescence de la ville égyptienne au Ier siècle apr. J.-C., se dress
 
 Ce projet démontre l'application pratique des différents algorithmes de tri et fournit un outil utile pour automatiser le processus de tri des données. Des améliorations futures pourraient inclure une interface utilisateur graphique et l'optimisation des performances des algorithmes de tri.
 
-## tri par bulles
+## tri par bulles :
 Étape 1
 1.1. ( 5 1 4 2 8 ) → ( 1 5 4 2 8 ). 
 1.2. ( 1 5 4 2 8 ) → ( 1 4 5 2 8 )
@@ -43,7 +43,7 @@ Ce projet démontre l'application pratique des différents algorithmes de tri et
 Étape 4
 4.1. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
 
-## tri par insertion 
+## tri par insertion :
 
 i = 1 : 	
 6	5	3	1	8	7	2	4 ⟶  5	6	3	1	8	7	2	4
@@ -65,5 +65,20 @@ i = 6 :
 
 i = 7 : 	
 1	2	3	5	6	7	8	4   ⟶  1	2	3	4	5	6	7	8
+
+## tri par fusion :
+
+Fusionner [1;2;5] et [3;4] : le premier élément de la liste fusionnée sera le premier élément d'une des deux listes d'entrée (soit 1, soit 3) car ce sont des listes triées.
+
+Comparer 1 et 3 : 1 est plus petit
+[2;5] - [3;4] → [1]
+Comparer 2 et 3 : 2 est plus petit
+[5] - [3;4] → [1;2]
+Compare 5 et 3 → 3 est plus petit
+[5] - [4] → [1;2;3]
+Compare 5 et 4 : 4 est plus petit
+[5] → [1;2;3;4]
+Résultat de la fusion :
+[1;2;3;4;5]
  	
 
