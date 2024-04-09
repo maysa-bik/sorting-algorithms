@@ -2,14 +2,17 @@ import tkinter as tk
 import threading
 import time
 import random
-from sorting import tri_selection, tri_bulles, tri_insertion
+import numpy as np
+import matplotlib.colors as mcolors
 
-class ColorCircleSorter:
+from sorting import tri_bulles, tri_insertion, tri_selection
+
+class ColorWheelSorter:
     def __init__(self, root):
         self.root = root
-        self.root.title("Color Circle Sorter")
+        self.root.title("Color Wheel Sorter")
 
-        self.canvas = tk.Canvas(self.root, width=800, height=600, bg='white')
+        self.canvas = tk.Canvas(self.root, width=800, height=600, bg='white')  # Changer la couleur de fond à 'white'
         self.canvas.pack()
 
         self.colors = self.generate_random_colors()
@@ -22,7 +25,7 @@ class ColorCircleSorter:
         self.start_button.pack()
 
     def generate_random_colors(self):
-        return ["#%06x" % random.randint(0, 0xFFFFFF) for _ in range(50)]
+        return [(random.uniform(0, 1), 1, 1) for _ in range(50)]  # Générer des valeurs HSV aléatoires
 
     def draw_circle(self):
         center_x = 400
@@ -30,26 +33,24 @@ class ColorCircleSorter:
         radius = 250
         angle_increment = 360 / len(self.colors)
 
-        for i, color in enumerate(self.colors):
+        for i, hsv_color in enumerate(self.colors):
+            rgb_color = mcolors.hsv_to_rgb(hsv_color)
             start_angle = i * angle_increment
             end_angle = (i + 1) * angle_increment
+            fill_color = "#{:02x}{:02x}{:02x}".format(int(rgb_color[0] * 255), int(rgb_color[1] * 255), int(rgb_color[2] * 255))
             self.canvas.create_arc(center_x - radius, center_y - radius, center_x + radius, center_y + radius,
-                                    start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=color)
+                                    start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='')
 
     def start_sorting(self):
+        self.start_button.config(state="disabled")  # Désactiver le bouton pendant le tri
         threads = []
         for name, algorithm in self.algorithms:
             thread = threading.Thread(target=self.run_algorithm, args=(name, algorithm))
             threads.append(thread)
             thread.start()
 
-        for thread in threads:
-            thread.join()
-
-        # Afficher les résultats
-        print("Résultats des tris:")
-        for name, result in self.results.items():
-            print(f"{name}: {result} secondes")
+        # Planifier la mise à jour de l'interface utilisateur après l'exécution des algorithmes de tri
+        self.root.after(100, self.update_interface)
 
     def run_algorithm(self, name, algorithm):
         start_time = time.time()
@@ -61,27 +62,36 @@ class ColorCircleSorter:
         self.update_circle(sorted_colors)
 
     def update_circle(self, sorted_colors):
-        self.canvas.delete("color_arcs")  # Effacez les arcs de couleur actuels
+        self.canvas.delete("color_arcs")  # Effacer les arcs de couleur actuels
 
-        delay = 100  # Délai entre chaque étape de l'animation en millisecondes
+        angle_increment = 360 / len(sorted_colors)
 
-        for i, colors in enumerate(sorted_colors):
-            for j, color in enumerate(colors):
-                start_angle = j * 360 / len(self.colors)
-                end_angle = (j + 1) * 360 / len(self.colors)
-                self.canvas.create_arc(50, 50, 750, 550, start=start_angle, extent=360 / len(self.colors),
-                                        style=tk.PIESLICE, fill=color, tags="color_arcs")
+        for i, hsv_color in enumerate(sorted_colors):
+            rgb_color = mcolors.hsv_to_rgb(hsv_color)
+            start_angle = i * angle_increment
+            end_angle = (i + 1) * angle_increment
+            fill_color = "#{:02x}{:02x}{:02x}".format(int(rgb_color[0] * 255), int(rgb_color[1] * 255), int(rgb_color[2] * 255))
+            self.canvas.create_arc(400 - 250, 300 - 250, 400 + 250, 300 + 250,
+                                    start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='')
 
-            self.root.update()  # Mettez à jour l'affichage
-            time.sleep(delay / 1000)  # Attendez le délai avant la prochaine étape
+        self.root.update()  # Mettre à jour l'affichage
+
+    def update_interface(self):
+        self.start_button.config(state="normal")  # Activer à nouveau le bouton après le tri
 
 def main():
     root = tk.Tk()
-    app = ColorCircleSorter(root)
+    app = ColorWheelSorter(root)
     root.mainloop()
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
 
 
 
