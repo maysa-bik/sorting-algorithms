@@ -27,7 +27,19 @@ Dans l'effervescence de la ville égyptienne au Ier siècle apr. J.-C., se dress
 
 Ce projet démontre l'application pratique des différents algorithmes de tri et fournit un outil utile pour automatiser le processus de tri des données. Des améliorations futures pourraient inclure une interface utilisateur graphique et l'optimisation des performances des algorithmes de tri.
 
-## tri par bulles :
+## tri par selection
+
+Trouver le minimum de la liste et placez-le  à la fin de la section triée
+
+[5 3 1 4 2]
+[1-3 5 4 2]
+[1 2-5 4 3]
+[1 2 3-4 5]
+[1 2 3 4-5]
+[1 2 3 4 5 -]
+
+
+## tri à bulles :
 Étape 1
 1.1. ( 5 1 4 2 8 ) → ( 1 5 4 2 8 ). 
 1.2. ( 1 5 4 2 8 ) → ( 1 4 5 2 8 )
@@ -66,7 +78,7 @@ i = 6 :
 i = 7 : 	
 1	2	3	5	6	7	8	4   ⟶  1	2	3	4	5	6	7	8
 
-## tri par fusion :
+## tri fusion :
 
 Fusionner [1;2;5] et [3;4] : le premier élément de la liste fusionnée sera le premier élément d'une des deux listes d'entrée (soit 1, soit 3) car ce sont des listes triées.
 
@@ -80,5 +92,22 @@ Compare 5 et 4 : 4 est plus petit
 [5] → [1;2;3;4]
 Résultat de la fusion :
 [1;2;3;4;5]
+
+## tri rapide :
+
+Prenons 5, 9, 7, 3, 8 comme suite de nombres, et trions la dans l'ordre croissant avec l'algorithme du tri rapide :
+
+5, 9, 7, 3, 8 -> on choisit le pivot, dans notre cas je choisis l'élément du milieu, 7.
+
+5, 3 | 7 | 9, 8 -> on découpe le tableau en trois parties, une partie avec des éléments inférieurs au pivot (5 et 3), la partie contenant le pivot (7), et une partie avec les éléments supérieurs au pivot (9 et 8). On peut déjà dire qu'on a placé le pivot à sa place définitive dans le tableau, puisque les autres éléments sont soit supérieurs soit inférieurs à lui.
+
+5, 3 | 7 | 9, 8 -> on recommence en choisissant de nouveau un pivot pour chaque sous tableaux créés.
+
+3 | 5 | 7 | 8 | 9 -> dernière étape du partitionnement, désormais aucuns sous tableaux ne contient plus d'un élément, le tri est donc terminé.
+
+3, 5, 7, 8, 9
+
+## tri par tas :
+
  	
 
