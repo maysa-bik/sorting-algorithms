@@ -77,62 +77,92 @@ def tri_insertion(arr):
 """
 tri par fusion
 """
+def tri_fusion(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        milieu = len(arr) // 2
+        gauche = tri_fusion(arr[:milieu])
+        droite = tri_fusion(arr[milieu:])
+        return fusionner(gauche, droite)
 
+def fusionner(gauche, droite):
+    resultat = []
+    i = j = 0
+    while i < len(gauche) and j < len(droite):
+        if gauche[i] < droite[j]:
+            resultat.append(gauche[i])
+            i += 1
+        else:
+            resultat.append(droite[j])
+            j += 1
+    resultat.extend(gauche[i:])
+    resultat.extend(droite[j:])
+    return resultat
 
 """
 tri par rapide
 """
-
+def tri_rapide(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[0]
+        moins = [x for x in arr[1:] if x <= pivot]
+        plus = [x for x in arr[1:] if x > pivot]
+        return tri_rapide(moins) + [pivot] + tri_rapide(plus)
 
 """
 tri par tas
 """
 # Tri par tas
-def heapify(arr, n, i):
-    largest = i
-    l = 2 * i + 1
-    r = 2 * i + 2
+def entasser_tas(arr, n, i):
+    plus_grand = i
+    gauche = 2 * i + 1
+    droite = 2 * i + 2
 
-    if l < n and arr[l] > arr[largest]:
-        largest = l
+    if gauche < n and arr[gauche] > arr[plus_grand]:
+        plus_grand = gauche
 
-    if r < n and arr[r] > arr[largest]:
-        largest = r
+    if droite < n and arr[droite] > arr[plus_grand]:
+        plus_grand = droite
 
-    if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]
-        heapify(arr, n, largest)
+    if plus_grand != i:
+        arr[i], arr[plus_grand] = arr[plus_grand], arr[i]
+        entasser_tas(arr, n, plus_grand)
 
-def heap_sort(arr):
+def tri_par_tas(arr):
     n = len(arr)
 
     for i in range(n // 2 - 1, -1, -1):
-        heapify(arr, n, i)
+        entasser_tas(arr, n, i)
 
     for i in range(n - 1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]
-        heapify(arr, i, 0)
+        entasser_tas(arr, i, 0)
+
 
 """
 tri à peigne
 """
 
 # Tri à peigne
-def comb_sort(arr):
+def tri_a_peigne(arr):
     n = len(arr)
     gap = n
     shrink = 1.3
-    sorted = False
+    trie = False
 
-    while not sorted:
+    while not trie:
         gap = int(gap / shrink)
         if gap <= 1:
             gap = 1
-            sorted = True
+            trie = True
         i = 0
         while i + gap < n:
             if arr[i] > arr[i + gap]:
                 arr[i], arr[i + gap] = arr[i + gap], arr[i]
-                sorted = False
+                trie = False
             i += 1
+
 

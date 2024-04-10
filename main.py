@@ -44,7 +44,7 @@ class ColorWheelSorter:
         self.root.update()
 
     def generate_random_colors(self):
-        return [(random.uniform(0, 1), 1, 1) for _ in range(200)]
+        return [(random.uniform(0, 1), 1, 1) for _ in range(300)]
 
     def draw_circle(self):
         center_x = 400
@@ -79,8 +79,6 @@ class ColorWheelSorter:
         self.update_circle(sorted_colors, name)
 
     def update_circle(self, sorted_colors, algorithm_name):
-        self.canvas.delete("color_arcs")
-
         angle_increment = 360 / len(sorted_colors)
 
         for i, hsv_color in enumerate(sorted_colors):
@@ -88,10 +86,19 @@ class ColorWheelSorter:
             start_angle = i * angle_increment
             end_angle = (i + 1) * angle_increment
             fill_color = "#{:02x}{:02x}{:02x}".format(int(rgb_color[0] * 255), int(rgb_color[1] * 255), int(rgb_color[2] * 255))
-            self.canvas.create_arc(400 - 250, 300 - 250, 400 + 250, 300 + 250,
-                                    start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='')
+
+            # Vérifier s'il y a déjà un arc de couleur à cet indice
+            item_id = f"color_arc_{i}"
+            if self.canvas.find_withtag(item_id):
+                # Mettre à jour la couleur de l'arc existant
+                self.canvas.itemconfig(item_id, fill=fill_color)
+            else:
+                # Créer un nouvel arc de couleur
+                self.canvas.create_arc(400 - 250, 300 - 250, 400 + 250, 300 + 250,
+                                    start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='', tag=item_id)
 
         self.root.update()
+
 
     def update_interface(self):
         self.start_button.config(state="normal")
