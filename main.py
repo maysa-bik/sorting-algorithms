@@ -12,7 +12,7 @@ class ColorWheelSorter:
         self.root = root
         self.root.title("Color Wheel Sorter")
 
-        self.canvas = tk.Canvas(self.root, width=800, height=600, bg='white')  # Changer la couleur de fond à 'white'
+        self.canvas = tk.Canvas(self.root, width=800, height=600, bg='black')
         self.canvas.pack()
 
         self.colors = self.generate_random_colors()
@@ -24,8 +24,27 @@ class ColorWheelSorter:
         self.start_button = tk.Button(self.root, text="Start Sorting", command=self.start_sorting)
         self.start_button.pack()
 
+        # Ajouter un nouveau bouton pour mélanger les couleurs
+        self.shuffle_button = tk.Button(self.root, text="Shuffle Colors", command=self.shuffle_colors)
+        self.shuffle_button.pack()
+
+        self.labels = []
+        for i, (name, _) in enumerate(self.algorithms):
+            label = tk.Label(self.root, text=f"{name}: ")
+            label.pack()
+            self.labels.append(label)
+
+
+    def shuffle_colors(self):
+        # Générer de nouvelles couleurs aléatoires
+        self.colors = self.generate_random_colors()
+        # Redessiner le cercle avec les nouvelles couleurs
+        self.draw_circle()
+        # Mettre à jour l'affichage
+        self.root.update()
+
     def generate_random_colors(self):
-        return [(random.uniform(0, 1), 1, 1) for _ in range(50)]  # Générer des valeurs HSV aléatoires
+        return [(random.uniform(0, 1), 1, 1) for _ in range(200)]
 
     def draw_circle(self):
         center_x = 400
@@ -42,14 +61,13 @@ class ColorWheelSorter:
                                     start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='')
 
     def start_sorting(self):
-        self.start_button.config(state="disabled")  # Désactiver le bouton pendant le tri
+        self.start_button.config(state="disabled")
         threads = []
         for name, algorithm in self.algorithms:
             thread = threading.Thread(target=self.run_algorithm, args=(name, algorithm))
             threads.append(thread)
             thread.start()
 
-        # Planifier la mise à jour de l'interface utilisateur après l'exécution des algorithmes de tri
         self.root.after(100, self.update_interface)
 
     def run_algorithm(self, name, algorithm):
@@ -58,11 +76,10 @@ class ColorWheelSorter:
         end_time = time.time()
         self.results[name] = end_time - start_time
 
-        # Mettre à jour l'affichage du cercle
-        self.update_circle(sorted_colors)
+        self.update_circle(sorted_colors, name)
 
-    def update_circle(self, sorted_colors):
-        self.canvas.delete("color_arcs")  # Effacer les arcs de couleur actuels
+    def update_circle(self, sorted_colors, algorithm_name):
+        self.canvas.delete("color_arcs")
 
         angle_increment = 360 / len(sorted_colors)
 
@@ -74,10 +91,12 @@ class ColorWheelSorter:
             self.canvas.create_arc(400 - 250, 300 - 250, 400 + 250, 300 + 250,
                                     start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='')
 
-        self.root.update()  # Mettre à jour l'affichage
+        self.root.update()
 
     def update_interface(self):
-        self.start_button.config(state="normal")  # Activer à nouveau le bouton après le tri
+        self.start_button.config(state="normal")
+        for i, (name, _) in enumerate(self.algorithms):
+            self.labels[i].config(text=f"{name}: {self.results.get(name, 'N/A'):.2f} sec")
 
 def main():
     root = tk.Tk()
@@ -86,13 +105,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
