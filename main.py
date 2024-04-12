@@ -51,18 +51,21 @@ class ColorWheelSorter:
         algorithm_func = dict(self.algorithms)[algorithm_name]
         # Copier les couleurs pour éviter de les modifier
         colors_copy = self.colors[:]
+        # Initialiser le compteur de comparaisons
+        comparisons = 0
         # Mesurer le temps d'exécution
         start_time = time.time()
         # Exécuter l'algorithme de tri
-        sorted_colors = algorithm_func(colors_copy)
+        sorted_colors, comparisons = algorithm_func(colors_copy)
         end_time = time.time()
         # Calculer le temps d'exécution en secondes
         execution_time = end_time - start_time
         # Afficher le temps d'exécution dans la console
         print(f"{algorithm_name}: {execution_time:.4f} seconds")
         # Mettre à jour le cercle avec les couleurs triées
-        self.update_circle(sorted_colors, algorithm_name)    
-
+        self.update_circle(sorted_colors, algorithm_name)
+        # Retourner à la fois les couleurs triées et le nombre de comparaisons
+        return sorted_colors, comparisons
 
 
     def generate_random_colors(self):
@@ -87,17 +90,8 @@ class ColorWheelSorter:
         # Si aucun algorithme n'est spécifié, utilisez le tri de sélection par défaut
         if algorithm_name is None:
             algorithm_name = "Selection Sort"
-        # Récupérer la fonction de tri associée au nom de l'algorithme
-        #algorithm_func = dict(self.algorithms)[algorithm_name]
+        # Lancer l'algorithme de tri dans un thread séparé pour ne pas bloquer l'interface utilisateur
         threading.Thread(target=self.execute_sort_algorithm, args=(algorithm_name,)).start()
-        #thread.start()
-
-    def run_algorithm(self, name, algorithm):
-        start_time = time.time()
-        sorted_colors = algorithm(self.colors[:])
-        end_time = time.time()
-        self.results[name] = end_time - start_time
-        self.update_circle(sorted_colors, name)
 
     def update_circle(self, sorted_colors, algorithm_name):
         angle_increment = 360 / len(sorted_colors)
@@ -118,30 +112,17 @@ class ColorWheelSorter:
                 self.canvas.create_arc(400 - 250, 300 - 250, 400 + 250, 300 + 250,
                                     start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='', tag=item_id)
 
+        # Mettre à jour l'affichage
         self.root.update()
 
-    def update_interface(self):
-        self.start_button.config(state="normal")
-        for i, (name, _) in enumerate(self.algorithms):
-            self.labels[i].config(text=f"{name}: {self.results.get(name, 'N/A'):.2f} sec")    
-
-    def generer_couleurs(self,liste):
-        hsv = [(x/len(liste), 1, 1) for x in liste]
-        rgb = [colorsys.hsv_to_rgb(*x) for x in hsv]
-        return rgb
-
-    def temps_execution(self, fonction, *args, **kwargs):
-        debut = time.time()
-        fonction(*args, **kwargs)
-        fin = time.time()
-        temps_execution = fin - debut
-        return temps_execution
-
+# Fonction principale pour démarrer l'application
 def main():
     root = tk.Tk()
     app = ColorWheelSorter(root)
     root.mainloop()
 
+# Vérifier si le script est exécuté en tant que programme principal
 if __name__ == "__main__":
     main()
+
 
