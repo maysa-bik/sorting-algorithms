@@ -1,5 +1,4 @@
-"""
-def selection_sort(arr):
+def tri_selection(arr):
     # Traverse through all array elements
     for i in range(len(arr)):
         # Find the minimum element in remaining unsorted array
@@ -11,7 +10,7 @@ def selection_sort(arr):
         # Swap the found minimum element with the first element
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
-def bubble_sort(arr):
+def tri_bulles(arr):
     # Traverse through all array elements
     for i in range(len(arr)):
         # Last i elements are already sorted
@@ -21,144 +20,96 @@ def bubble_sort(arr):
             # than the next element
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
-"""
-
-"""
-tri par selection
-"""
-def tri_selection(arr):
-    # Traverse through all array elements
-    for i in range(len(arr)):
-        # Find the minimum element in remaining unsorted array
-        min_idx = i
-        for j in range(i + 1, len(arr)):
-            if arr[min_idx] > arr[j]:
-                min_idx = j
-        # Swap the found minimum element with the first element
-        arr[i], arr[min_idx] = arr[min_idx], arr[i]
-"""
-tri par bubble
-"""
-def tri_bulles(arr):
-    n = len(arr)
-    for i in range(n-1):
-        for j in range(0, n-i-1):
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]
 
 
-"""
-# Tri par insertion
-[5,3,8,6,9]
-
-[5, 3,8,6,9]
-[3,5, 8,6,9]
-[3,5,8, 6,9]
-[3,5,6,8, 9]
-[",5,6,8,9]
-"""
 def tri_insertion(arr):
-    for i in range (1, len(arr)):
-        cle = arr[i]
+    # Traverse through 1 to len(arr)
+    for i in range(1, len(arr)):
+        key = arr[i]
+        # Move elements of arr[0.i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
         j = i - 1
-
-        while j >= 0 and cle < arr[j]:
+        while j >= 0 and key < arr[j]:
             arr[j + 1] = arr[j]
             j -= 1
+        arr[j + 1] = key
 
-        arr[j + 1] = cle
-
-    return arr
-
-"""
-tri par fusion
-"""
 def tri_fusion(arr):
-    if len(arr) <= 1:
-        return arr
-    else:
-        milieu = len(arr) // 2
-        gauche = tri_fusion(arr[:milieu])
-        droite = tri_fusion(arr[milieu:])
-        return fusionner(gauche, droite)
+        # If the array has one or no elements, it is already sorted
+        if len(arr) <= 1:
+            return arr
 
-def fusionner(gauche, droite):
-    resultat = []
-    i = j = 0
-    while i < len(gauche) and j < len(droite):
-        if gauche[i] < droite[j]:
-            resultat.append(gauche[i])
-            i += 1
-        else:
-            resultat.append(droite[j])
-            j += 1
-    resultat.extend(gauche[i:])
-    resultat.extend(droite[j:])
-    return resultat
+        # Find the middle of the array
+        mid = len(arr) // 2
 
-"""
-tri par rapide
-"""
+        # Recursively sort the left and right halves
+        left = tri_fusion(arr[:mid])
+        right = tri_fusion(arr[mid:])
+
+        # Initialize an empty list to hold the merged array
+        merged = []
+
+        # While there are elements in either left or right
+        while left and right:
+            # If the first element of left is smaller or equal, append it to the merged list
+            if left[0] <= right[0]:
+                merged.append(left.pop(0))
+            # Otherwise, append the first element of right
+            else:
+                merged.append(right.pop(0))
+
+        # If there are remaining elements in either left or right, append them
+        merged.extend(left if left else right)
+
+        return merged
+
+
 def tri_rapide(arr):
+    # If the array has one or no elements, it is already sorted
     if len(arr) <= 1:
         return arr
-    else:
-        pivot = arr[0]
-        moins = [x for x in arr[1:] if x <= pivot]
-        plus = [x for x in arr[1:] if x > pivot]
-        return tri_rapide(moins) + [pivot] + tri_rapide(plus)
-
-"""
-tri par tas
-"""
-# Tri par tas
-def entasser_tas(arr, n, i):
-    plus_grand = i
-    gauche = 2 * i + 1
-    droite = 2 * i + 2
-
-    if gauche < n and arr[gauche] > arr[plus_grand]:
-        plus_grand = gauche
-
-    if droite < n and arr[droite] > arr[plus_grand]:
-        plus_grand = droite
-
-    if plus_grand != i:
-        arr[i], arr[plus_grand] = arr[plus_grand], arr[i]
-        entasser_tas(arr, n, plus_grand)
+    # Choose the middle element as the pivot
+    pivot = arr[len(arr) // 2]
+    # Partition the array into three parts: less than pivot, equal to pivot, greater than pivot
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    # Recursively sort the left and right parts and concatenate the results
+    return tri_rapide(left) + middle + tri_rapide(right)
 
 def tri_par_tas(arr):
-    n = len(arr)
+    # Import the heapq module
+    import heapq
+    # Transform the array into a heap
+    heapq.heapify(arr)
+    # Pop elements from the heap until it is empty
+    return [heapq.heappop(arr) for _ in range(len(arr))]
 
-    for i in range(n // 2 - 1, -1, -1):
-        entasser_tas(arr, n, i)
-
-    for i in range(n - 1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i]
-        entasser_tas(arr, i, 0)
-
-
-"""
-tri à peigne
-"""
-
-# Tri à peigne
 def tri_a_peigne(arr):
-    n = len(arr)
-    gap = n
+    # Initialize the gap and the shrink factor
+    gap = len(arr)
     shrink = 1.3
-    trie = False
-
-    while not trie:
+    # Initialize the is_sorted flag as False
+    is_sorted = False
+    # While the array is not sorted
+    while not is_sorted:
+        # Update the gap
         gap = int(gap / shrink)
+        # If the gap is 1, the array is sorted
         if gap <= 1:
             gap = 1
-            trie = True
+            is_sorted = True
+        # Initialize the index
         i = 0
-        while i + gap < n:
+        # While there are elements at index i and i + gap
+        while i + gap < len(arr):
+            # If the element at index i is greater than the one at i + gap, swap them
             if arr[i] > arr[i + gap]:
                 arr[i], arr[i + gap] = arr[i + gap], arr[i]
-                trie = False
+                # The array is not sorted
+                is_sorted = False
+            # Increment the index
             i += 1
-
-
+    # Return the sorted array
+    return arr
