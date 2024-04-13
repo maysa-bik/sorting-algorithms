@@ -1,113 +1,79 @@
-# sorting-algorithms
+# Sorting Visualizer 🔄
 
-# Projet de tri d'algorithmes
+## Introduction 📚
 
-Ce projet vise à fournir un outil d'automatisation de tri d'objets, en particulier des listes de nombres réels, en utilisant différents algorithmes de tri.
+Sorting Visualizer is a Python application designed to visualize various sorting algorithms through a graphical user
+interface (GUI). It allows users to interactively select and visualize how different sorting algorithms manipulate data.
 
-## Contexte du projet
+## Table of Contents 📑
 
-Dans l'effervescence de la ville égyptienne au Ier siècle apr. J.-C., se dressait la Grande Bibliothèque d’Alexandrie, tel un phare du savoir antique. Parmi les érudits arpentant les couloirs sacrés se trouvait Héron, un esprit brillant réputé pour ses prouesses et son habileté en mathématiques, en mécanique et en ingénierie. Un jour, alors que Héron parcourait la vaste collection de papyrus et de parchemins, il ne put s'empêcher de remarquer le désordre qui sévissait dans la Bibliothèque. Déterminé à rétablir l'ordre, Héron s'est attelé à la tâche en explorant différentes méthodes pour résoudre ce nouveau défi qui se présentait à lui.
+- [Introduction 📚](#introduction-)
+- [Features 🌟](#features-)
+- [Installation 🔧](#installation-)
+- [Usage 🚀](#usage-)
+- [Supported Sorting Algorithms 📊](#supported-sorting-algorithms-)
+- [Dependencies 📌](#dependencies-)
+- [Testing 🧪](#testing-)
+- [Contributors 👥](#contributors-)
+- [License 📄](#license-)
 
-## Algorithmes de tri implémentés
+## Features 🌟
 
-1. Tri par sélection
-2. Tri à bulles
-3. Tri par insertion
-4. Tri fusion
-5. Tri rapide
-6. Tri par tas
-7. Tri à peigne
+- Interactive GUI built with Tkinter.
+- Visualization of sorting processes in real-time.
+- Support for multiple sorting algorithms including Selection Sort, Bubble Sort, Insertion Sort, Merge Sort, Quick Sort,
+  Heap Sort, and Comb Sort.
+- Performance measurement for sorting operations.
 
-## Exécution du code
+## Installation 🔧
 
-- Assurez-vous d'avoir Python installé sur votre système.
-- Exécutez le fichier main.py et suivez les instructions pour choisir l'algorithme de tri et saisir la liste de nombres réels à trier.
+To run Sorting Visualizer, ensure you have Python and pip installed on your system. You can install all the required
+dependencies with the following command:
 
-## Conclusion
+```
+pip install -r requirements.txt
+```
 
-Ce projet démontre l'application pratique des différents algorithmes de tri et fournit un outil utile pour automatiser le processus de tri des données. Des améliorations futures pourraient inclure une interface utilisateur graphique et l'optimisation des performances des algorithmes de tri.
+## Usage 🚀
 
-## tri par selection
+To start the application, run the following command in the terminal:
 
-Trouver le minimum de la liste et placez-le  à la fin de la section triée
+```
+python main.py
+```
 
-[5 3 1 4 2]
-[1-3 5 4 2]
-[1 2-5 4 3]
-[1 2 3-4 5]
-[1 2 3 4-5]
-[1 2 3 4 5 -]
+The GUI will open where you can generate data, choose a sorting algorithm, and visualize the sorting process.
 
+## Supported Sorting Algorithms 📊
 
-## tri à bulles :
-Étape 1
-1.1. ( 5 1 4 2 8 ) → ( 1 5 4 2 8 ). 
-1.2. ( 1 5 4 2 8 ) → ( 1 4 5 2 8 )
-1.3. ( 1 4 5 2 8 ) → ( 1 4 2 5 8 )
-1.4. ( 1 4 2 5 8 ) → ( 1 4 2 5 8 )
-Étape 2
-2.1. ( 1 4 2 5 8 ) → ( 1 4 2 5 8 )
-2.2. ( 1 4 2 5 8 ) → ( 1 2 4 5 8 )
-2.3. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
-Étape 3
-3.1. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
-3.2. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
-Étape 4
-4.1. ( 1 2 4 5 8 ) → ( 1 2 4 5 8 )
+- Selection Sort
+- Bubble Sort
+- Insertion Sort
+- Merge Sort
+- Quick Sort
+- Heap Sort
+- Comb Sort
 
-## tri par insertion :
+## Dependencies 📌
 
-i = 1 : 	
-6	5	3	1	8	7	2	4 ⟶  5	6	3	1	8	7	2	4
- 	
-i = 2 : 	
-5	6	3	1	8	7	2	4  ⟶ 3	5	6	1	8	7	2	4
- 	
-i = 3 : 	
-3	5	6	1	8	7	2	4  ⟶  1	3	5	6	8	7	2	4
-	
-i = 4 : 	
-1	3	5	6	8	7	2	4  ⟶ 1	3	5	6	8	7	2	4
- 	
-i = 5 : 	
-1	3	5	6	8	7	2	4 ⟶  1	3	5	6	7	8	2	4
-	
-i = 6 : 	
-1	3	5	6	7	8	2	4  ⟶  1	 2	3	5	6	7	8	4	 
+- matplotlib==3.8.4
+- mplcursors==0.5.2
+- ttkthemes==3.2.0
 
-i = 7 : 	
-1	2	3	5	6	7	8	4   ⟶  1	2	3	4	5	6	7	8
+## Testing 🧪
 
-## tri fusion :
+The application includes unit tests for verifying the correctness of the implemented sorting algorithms. These tests can
+be run with the following command:
 
-Fusionner [1;2;5] et [3;4] : le premier élément de la liste fusionnée sera le premier élément d'une des deux listes d'entrée (soit 1, soit 3) car ce sont des listes triées.
+```
+python -m unittest test.py
+```
 
-Comparer 1 et 3 : 1 est plus petit
-[2;5] - [3;4] → [1]
-Comparer 2 et 3 : 2 est plus petit
-[5] - [3;4] → [1;2]
-Compare 5 et 3 → 3 est plus petit
-[5] - [4] → [1;2;3]
-Compare 5 et 4 : 4 est plus petit
-[5] → [1;2;3;4]
-Résultat de la fusion :
-[1;2;3;4;5]
+## Contributors 👥
 
-## tri rapide :
+- Maysa Bik
+- Chaima Bekhaouda
 
-Prenons 5, 9, 7, 3, 8 comme suite de nombres, et trions la dans l'ordre croissant avec l'algorithme du tri rapide :
+## License 📄
 
-5, 9, 7, 3, 8 -> on choisit le pivot, dans notre cas je choisis l'élément du milieu, 7.
-
-5, 3 | 7 | 9, 8 -> on découpe le tableau en trois parties, une partie avec des éléments inférieurs au pivot (5 et 3), la partie contenant le pivot (7), et une partie avec les éléments supérieurs au pivot (9 et 8). On peut déjà dire qu'on a placé le pivot à sa place définitive dans le tableau, puisque les autres éléments sont soit supérieurs soit inférieurs à lui.
-
-5, 3 | 7 | 9, 8 -> on recommence en choisissant de nouveau un pivot pour chaque sous tableaux créés.
-
-3 | 5 | 7 | 8 | 9 -> dernière étape du partitionnement, désormais aucuns sous tableaux ne contient plus d'un élément, le tri est donc terminé.
-
-3, 5, 7, 8, 9
-
-## tri par tas :
-
- 	
-
+This project is licensed under the MIT License.
