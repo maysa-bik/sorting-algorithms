@@ -83,7 +83,7 @@ class SortingVisualizer:
         self.message_frame = tk.Frame(self.root)
         self.message_frame.pack(fill=tk.BOTH, expand=True)
 
-        self.time_label = tk.Label(self.message_frame, text="Try sorting the data!")
+        self.time_label = tk.Label(self.message_frame, text="Try sorting the data!", fg='#AE388B')
         self.time_label.pack()
 
         control_frame.configure(bg=BG_COLOR)
@@ -147,9 +147,7 @@ class SortingVisualizer:
             self.root.after(100, self.update_sort_visualization)
         except StopIteration:
             self.sorting_in_progress = False
-            self.completion_label = tk.Label(self.message_frame, text="Sorting visualization is complete.")
-            self.completion_label.pack()
-            self.completion_label.configure(bg='lavender', fg='purple')
+            self.time_label.config(text=f"Sorting complete for {self.algo_var.get()}!")
 
     def generate_data(self):
         self.sorting_in_progress = False
