@@ -311,7 +311,7 @@ class ColorWheelSorter:
 def main():
     root = tk.Tk()
     app = ColorWheelSorter(root)
-    #app.update_interface_with_sorting_times()
+    app.update_interface_with_sorting_times()
     root.mainloop()
     
 
