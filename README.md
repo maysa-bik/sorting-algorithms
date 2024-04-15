@@ -108,6 +108,31 @@ Prenons 5, 9, 7, 3, 8 comme suite de nombres, et trions la dans l'ordre croissan
 3, 5, 7, 8, 9
 
 ## tri par tas :
+Comme organiser un groupe de personnes par taille, en plaçant la plus grande personne à la fin de la file et en déplaçant les personnes plus petites vers l'avant jusqu'à ce que tout le monde soit en ordre.
+
+
+## tri a peigne :
+
+Reprenons la liste suivante : 14 - 21 - 8 - 15 - 35 - 59 - 63 - 9 - 42 - 69
+Ici N = 10, on prend la partie entière de 10 // 1,3 soit 7
+            14 − 21 − 8 − 15 − 35 − 59 − 63 − 9 − 42 − 69
+Seuls 14 et 9 sont à permuter, on calcule la partie  entière de 7 // 1,3 soit 5, on a alors :
+            9 − 21 − 8 − 15 − 35 − 59 − 63 − 14 − 42 − 69
+Aucun élément n’est à permuter, on calcule la partie entière de 5 // 1,3 soit 3, on a
+alors en ne visualisant que les paires à permuter :
+            9 − 21 − 8 − 15 − 35 − 59 − 63 − 14 − 42 − 69
+Deux paires sont à permuter, on calcule la partie entière de 3 // 1,3 soit 2, on a alors
+en ne visualisant que les paires à permuter :
+            9 − 21 − 8 − 15 − 14 − 42 − 63 − 35 − 59 − 69
+Quatre paires sont à permuter. on calcule 2 // 1,3 < 1, on prend 1, on a alors en ne
+visualisant que les paires à permuter :
+            8 − 15 − 9 − 21 − 14 − 35 − 59 − 42 − 63 − 69
+Trois paires sont à permuter. On observe que l’on peut encore permuter deux
+nombres consécutifs :
+            8 − 9 − 15 − 14 − 21 − 35 − 42 − 59 − 63 − 69
+On obtient alors la liste triée :
+            8 − 9 − 14 − 15 − 21 − 35 − 42 − 59 − 63 − 69
+
 
  	
 
@@ -122,3 +147,25 @@ Prenons 5, 9, 7, 3, 8 comme suite de nombres, et trions la dans l'ordre croissan
 | Rapide Sort | 0.978017 |
 | Tas Sort | 1.935479 |
 | Peigne Sort | 0.283942 |
+## Sorting Times
+
+| Algorithm | Time (seconds) |
+|-----------|----------------|
+| Selection Sort | 1.678550 |
+| Bubble Sort | 38.059007 |
+| Insertion Sort | 1.380674 |
+| Fusion Sort | 0.681395 |
+| Rapide Sort | 0.468437 |
+| Tas Sort | 1.305620 |
+| Peigne Sort | 0.203261 |
+## Sorting Times
+
+| Algorithm | Time (seconds) |
+|-----------|----------------|
+| Selection Sort | 1.584885 |
+| Bubble Sort | 32.936402 |
+| Insertion Sort | 1.321990 |
+| Fusion Sort | 0.625487 |
+| Rapide Sort | 0.400303 |
+| Tas Sort | 1.258361 |
+| Peigne Sort | 0.218193 |

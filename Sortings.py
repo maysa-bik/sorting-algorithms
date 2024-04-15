@@ -3,8 +3,6 @@ import threading
 import time
 import random
 import matplotlib.colors as mcolors
-import colorsys
-from math import sin, radians, cos, pi
 
 class ColorWheelSorter:
     def __init__(self, root):
@@ -48,7 +46,10 @@ class ColorWheelSorter:
         self.canvas.bind("<B1-Motion>", self.drag)
 
         # Initialiser les variables pour le déplacement
-        self.drag_data = {"x": 0, "y": 0, "item": None}   
+        self.drag_data = {"x": 0, "y": 0, "item": None}  
+        
+        self.sort_thread = None  # Variable pour stocker le thread de tri en cours
+  
 
     def shuffle_colors(self):
         # Générer de nouvelles couleurs aléatoires
@@ -101,8 +102,7 @@ class ColorWheelSorter:
         self.update_circle(sorted_colors, algorithm_name)
         # Réactiver le bouton de démarrage une fois le tri terminé
         self.start_button.config(state="normal")
-        # Réactiver le bouton de démarrage une fois le tri terminé
-        self.enable_start_button()
+
 
     def generate_random_colors(self):
         return [(random.uniform(0, 1), 1, 1) for _ in range(100)]
@@ -122,11 +122,20 @@ class ColorWheelSorter:
                                     start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='')
 
     def start_sorting(self, algorithm_name=None):
+        # Arrêter le tri en cours s'il y en a un
+        self.stop_sorting()
+
         # Récupérer l'algorithme sélectionné à partir de la liste déroulante
         selected_algorithm = self.algorithm_var.get()
         # Lancer l'algorithme de tri sélectionné
-        threading.Thread(target=self.execute_sort_algorithm, args=(selected_algorithm,)).start()
+        self.sort_thread = threading.Thread(target=self.execute_sort_algorithm, args=(selected_algorithm,))
+        self.sort_thread.start()
         self.start_button.config(state="disabled")
+
+    def stop_sorting(self):
+        # Si un thread de tri est en cours, attendez qu'il se termine
+        if self.sort_thread and self.sort_thread.is_alive():
+            self.sort_thread.join()    
 
     def update_circle(self, sorted_colors, algorithm_name):
         angle_increment = 360 / len(sorted_colors)
@@ -307,14 +316,4 @@ class ColorWheelSorter:
             self.root.update()
         return liste
 
-# Fonction principale pour démarrer l'application
-def main():
-    root = tk.Tk()
-    app = ColorWheelSorter(root)
-    app.update_interface_with_sorting_times()
-    root.mainloop()
-    
 
-# Vérifier si le script est exécuté en tant que programme principal
-if __name__ == "__main__":
-    main()
