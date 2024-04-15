@@ -112,7 +112,12 @@ Comme organiser un groupe de personnes par taille, en plaçant la plus grande pe
 
 
 ## tri a peigne :
+1. 
+Organisation initiale : Imaginez à nouveau le même groupe de personnes dans une file, mais cette fois-ci, vous commencez avec un peigne et vous les coiffez pour aligner les personnes de manière à ce que la plus grande soit à l'extrémité de la file.
 
+Comparaison et échange : Ensuite, vous passez le peigne à travers la file à des intervalles réguliers, en comparant la taille des personnes adjacentes. Si une personne est plus grande que la personne suivante, vous les échangez de place.
+
+2. 
 Reprenons la liste suivante : 14 - 21 - 8 - 15 - 35 - 59 - 63 - 9 - 42 - 69
 Ici N = 10, on prend la partie entière de 10 // 1,3 soit 7
             14 − 21 − 8 − 15 − 35 − 59 − 63 − 9 − 42 − 69
@@ -169,3 +174,14 @@ On obtient alors la liste triée :
 | Rapide Sort | 0.400303 |
 | Tas Sort | 1.258361 |
 | Peigne Sort | 0.218193 |
+## Sorting Times
+
+| Algorithm | Time (seconds) |
+|-----------|----------------|
+| Selection Sort | 1.593637 |
+| Bubble Sort | 30.811915 |
+| Insertion Sort | 1.350335 |
+| Fusion Sort | 0.627650 |
+| Rapide Sort | 0.455205 |
+| Tas Sort | 1.344063 |
+| Peigne Sort | 0.204798 |

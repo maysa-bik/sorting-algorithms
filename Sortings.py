@@ -5,6 +5,8 @@ import random
 import matplotlib.colors as mcolors
 
 class ColorWheelSorter:
+    # Initialisation de l'interface utilisateur avec le canevas, les boutons et les algorithmes de tri
+    # ainsi que la création des variables et des widgets nécessaires
     def __init__(self, root):
         self.root = root
         self.root.title("Color Wheel Sorter")
@@ -50,7 +52,7 @@ class ColorWheelSorter:
         
         self.sort_thread = None  # Variable pour stocker le thread de tri en cours
   
-
+    # Méthode pour mélanger aléatoirement les couleurs sur le cercle
     def shuffle_colors(self):
         # Générer de nouvelles couleurs aléatoires
         self.colors = self.generate_random_colors()
@@ -59,6 +61,8 @@ class ColorWheelSorter:
         # Mettre à jour l'affichage
         self.root.update()
 
+
+    # Méthode appelée lorsqu'un clic de souris est effectué pour démarrer le déplacement d'un élément sur le canevas
     def start_drag(self, event):
         # Trouver l'élément graphique cliqué
         item = self.canvas.find_closest(event.x, event.y)
@@ -67,7 +71,8 @@ class ColorWheelSorter:
             # Récupérer les coordonnées du clic de souris
             self.drag_data["x"] = event.x
             self.drag_data["y"] = event.y
-
+    
+    # Méthode appelée lors du déplacement de la souris pour mettre à jour la position de l'élément déplacé
     def drag(self, event):
         if self.drag_data["item"]:
             # Calculer le déplacement
@@ -79,7 +84,8 @@ class ColorWheelSorter:
             self.drag_data["x"] = event.x
             self.drag_data["y"] = event.y    
 
-
+    
+    # Méthode pour exécuter un algorithme de tri sélectionné et mettre à jour l'interface avec les résultats
     def execute_sort_algorithm(self, algorithm_name):
         # Récupérer la fonction de tri associée au nom de l'algorithme
         algorithm_func = dict(self.algorithms)[algorithm_name]
@@ -103,10 +109,11 @@ class ColorWheelSorter:
         # Réactiver le bouton de démarrage une fois le tri terminé
         self.start_button.config(state="normal")
 
-
+    # Méthode pour générer une liste de couleurs aléatoires au format HSV
     def generate_random_colors(self):
         return [(random.uniform(0, 1), 1, 1) for _ in range(100)]
-
+    
+    # Méthode pour dessiner le cercle avec les couleurs sur le canevas
     def draw_circle(self):
         center_x = 400
         center_y = 300
@@ -120,7 +127,8 @@ class ColorWheelSorter:
             fill_color = "#{:02x}{:02x}{:02x}".format(int(rgb_color[0] * 255), int(rgb_color[1] * 255), int(rgb_color[2] * 255))
             self.canvas.create_arc(center_x - radius, center_y - radius, center_x + radius, center_y + radius,
                                     start=start_angle, extent=angle_increment, style=tk.PIESLICE, fill=fill_color, outline='')
-
+    
+    # Méthode pour démarrer le tri en fonction de l'algorithme sélectionné
     def start_sorting(self, algorithm_name=None):
         # Arrêter le tri en cours s'il y en a un
         self.stop_sorting()
@@ -131,12 +139,14 @@ class ColorWheelSorter:
         self.sort_thread = threading.Thread(target=self.execute_sort_algorithm, args=(selected_algorithm,))
         self.sort_thread.start()
         self.start_button.config(state="disabled")
-
+    
+    # Méthode pour arrêter le tri en cours s'il y en a un
     def stop_sorting(self):
         # Si un thread de tri est en cours, attendez qu'il se termine
         if self.sort_thread and self.sort_thread.is_alive():
             self.sort_thread.join()    
-
+    
+    # Méthode pour mettre à jour le cercle avec les couleurs triées
     def update_circle(self, sorted_colors, algorithm_name):
         angle_increment = 360 / len(sorted_colors)
 
@@ -158,34 +168,40 @@ class ColorWheelSorter:
 
         # Mettre à jour l'affichage
         self.root.after(10, self.root.update)
-
+    
+    # Méthode pour réactiver le bouton de démarrage une fois le tri terminé
     def enable_start_button(self):
         self.start_button.config(state="normal")
         self.update_circle(self.colors, "Original Colors")
-
+    
+    # Méthode pour mesurer le temps d'exécution d'un algorithme de tri sur un ensemble de données
     def measure_sorting_time(self, algorithm_func, data):
         start_time = time.time()
         algorithm_func(data)
         end_time = time.time()
         return end_time - start_time
-
+    
+    # Méthode pour mesurer le temps d'exécution de tous les algorithmes de tri sur un ensemble de données
     def measure_sorting_times(self, data):
         times = {}
         for name, func in self.algorithms:
             times[name] = self.measure_sorting_time(func, data.copy())
         return times
     
+    # Méthode pour mettre à jour l'interface utilisateur avec les temps d'exécution des algorithmes de tri
     def update_interface_with_sorting_times(self):
         data = self.generate_random_colors()
         times = self.measure_sorting_times(data)
         self.print_sorting_times(times)
         self.readme_sorting_times(times)
-
+    
+    # Méthode pour afficher les temps d'exécution des algorithmes de tri dans la console
     def print_sorting_times(self, times):
         print("Sorting Times:")
         for name, time in times.items():
             print(f"{name}: {time:.6f} seconds")
-
+    
+    # Méthode pour enregistrer les temps d'exécution des algorithmes de tri dans un fichier README.md
     def readme_sorting_times(self, times):
         with open("README.md", "a") as file:
             file.write("## Sorting Times\n\n")
