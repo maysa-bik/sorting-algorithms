@@ -111,3 +111,14 @@ Prenons 5, 9, 7, 3, 8 comme suite de nombres, et trions la dans l'ordre croissan
 
  	
 
+## Sorting Times
+
+| Algorithm | Time (seconds) |
+|-----------|----------------|
+| Selection Sort | 2.830722 |
+| Bubble Sort | 58.457065 |
+| Insertion Sort | 2.462820 |
+| Fusion Sort | 1.228675 |
+| Rapide Sort | 0.978017 |
+| Tas Sort | 1.935479 |
+| Peigne Sort | 0.283942 |
